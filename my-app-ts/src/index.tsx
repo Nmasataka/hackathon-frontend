@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
+import { BrowserRouter } from 'react-router-dom';
 
 // テーマの作成
 const theme = createTheme({
@@ -23,9 +24,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <BrowserRouter>
     <ThemeProvider theme={theme}>
       <App />
     </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
