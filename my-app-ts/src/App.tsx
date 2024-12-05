@@ -2,25 +2,34 @@ import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Add } from '@mui/icons-material';
-import PostTweet from './PostTweet';
-import Tweet from './Tweet';
+//import PostTweet from './PostTweet';
 import { Routes, Route,BrowserRouter, useNavigate,Router } from "react-router-dom"; // 追加
-import Login from './Login';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { fireAuth } from "./firebase";
-import { Home } from "./Home" // Homeだけimport
+
+
 import SignupForm from './SignupForm';
 import InputForm from './InputForm';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+
 import Homepage from './components/Homepage';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
-import Feed from './components/Feed';
+import PostTweet from './components/PostTweet';
+import TweetDetail from './components/TweetDetail';
+import TweetList from './components/TweetList';
+import SetUsernameForm from './SetUserInfo';
+
+import { AuthProvider } from "./contexts/AuthContext";
+import theme from './theme';
+
+
 
 function App() {
   const [loginUser, setLoginUser] = useState(fireAuth.currentUser);
   const [tweets, setTweets] = useState<{ username: string; content: string; date: string }[]>([]);
   const [useremail,setEmail] = useState<string | null>(null);
+  const [data, setData] = useState("");
   
   // ダークモードの状態管理
   const [darkMode, setDarkMode] = useState(false);
@@ -28,32 +37,42 @@ function App() {
   const navigate = useNavigate();//追加
 
   // テーマの作成
+  /*
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
     },
   });
-
-  const handlePost = (content: string) => {
-    const newTweet = {
-      username: 'ユーザー名', // 仮のユーザー名。後で認証機能などで動的に変更可能
-      content,
-      date: new Date().toLocaleString(),
-    };
-    setTweets([newTweet, ...tweets]);
-  };
+  */
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(fireAuth, user => {
       setLoginUser(user);
       if(user){
         setEmail(user.email);
+        localStorage.setItem("uid", user.uid);
+        //fetchloginusername(localStorage.getItem("uid"));
+        //LoginPOST(user.email);
       }else{
-        setEmail(null);
+        setEmail("");
+        setData("");
+        localStorage.removeItem("uid");
+        localStorage.removeItem("username");
       }
     });
     return () => unsubscribe(); // アンマウント時に監視解除
   }, []); // 空の依存配列で一度だけ実行
+
+
+
+
+
+
+  useEffect(()=>{
+    if(useremail){
+      //LoginPOST(useremail);
+    }
+  },[useremail])
 
   const Logoutbutton = () => {
     signOut(fireAuth).then(() => {
@@ -62,27 +81,35 @@ function App() {
       alert(err);
     });
   };
+
   const Loginbutton = () => {
     navigate('/login')
   }
 
+
+  const fetchloginusername = async(uid:string | null)=>{
+      try{
+          const response = await fetch(`${process.env.REACT_APP_URL}/loginusername?uid=${uid}`,{
+            method: "GET",
+            headers: {"Content-Type":"application/json",},});
+          if(!response.ok){
+              throw Error(`Failed to create user: ${response.status}`);
+          }
+          const Res = await response.json();
+          console.log(Res[0].username)
+          localStorage.setItem("username", Res[0].username);
+          //setData(Res[0].email);
+          
+      }catch(err){
+        console.log(err);
+      }
+  }
+
+
   return (
+    <AuthProvider>
         <div className="App">
           {/* 
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.tsx</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-            </a>
-          </header>
-          */}
           {loginUser ? (
             <>
               <h1 style={{ color: "blue" }}>ログイン中</h1>
@@ -95,29 +122,25 @@ function App() {
             </>
           )}
           <h1>{useremail}</h1>
-          {/*
-          <div style={{ padding: 20 }}>
-              <h1>Twitterクローン</h1>
-              <PostTweet onPost={handlePost} />
-              {tweets.map((tweet, index) => (
-                <Tweet key={index} username={tweet.username} content={tweet.content} date={tweet.date} />
-              ))}
-          </div>
           */}
           <ThemeProvider theme={theme}>
               <CssBaseline />
               <Routes>
-                <Route path="/" element={<Homepage setDarkMode={setDarkMode} darkMode={darkMode} />}>
-                    <Route index element={<Feed />} />
-                    <Route path="profile" element={<Profile />} />
+                <Route path="/" element={<Homepage setDarkMode={setDarkMode} darkMode={darkMode}  />}>
+                    <Route index element={<PostTweet/>} />
+                    <Route path="profile/:id" element={<Profile />} />
                     <Route path="edit-profile" element={<EditProfile />} />
+                    <Route path="tweet/:id" element={<TweetDetail />} />
+                    <Route path="tweetlist" element={<TweetList postuids={"all"}/>} />
                 </Route>
                 <Route path="/login" element={ <InputForm /> } /> 
                 <Route path="/signup" element={<SignupForm />} />
+                <Route path="/setusername" element={<SetUsernameForm />} />
               </Routes>
           </ThemeProvider>
           
         </div>
+        </AuthProvider>
   );
 }
 

@@ -19,6 +19,13 @@ const theme = createTheme({
   },
 });
 
+// Google Fonts を CSS に追加
+const link = document.createElement("link");
+link.href = "https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap";
+link.rel = "stylesheet";
+document.head.appendChild(link);
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

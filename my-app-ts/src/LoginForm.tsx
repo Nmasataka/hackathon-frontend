@@ -19,11 +19,14 @@ const InputForm : React.FC = () => {
 
         try {
             await signInWithEmailAndPassword(fireAuth, mail, password);
+            console.log("kokoniiruyo");
+            await fetchloginusername(localStorage.getItem("uid"));
             setMail("");
             setPassword("");
             alert("ログイン成功！");
+            
+
             setTimeout(() => navigate('/'), 100);
-            //navigate('/')
         } catch (error: any) {
             setError(error.message); // エラーメッセージを設定
             alert("login失敗")
@@ -44,6 +47,25 @@ const InputForm : React.FC = () => {
           alert(err);
         });
       };
+
+
+      const fetchloginusername = async(uid:string | null)=>{
+        try{
+            const response = await fetch(`${process.env.REACT_APP_URL}/loginusername?uid=${uid}`,{
+              method: "GET",
+              headers: {"Content-Type":"application/json",},});
+            if(!response.ok){
+                throw Error(`Failed to create user: ${response.status}`);
+            }
+            const Res = await response.json();
+            console.log(Res[0].username)
+            localStorage.setItem("username", Res[0].username);
+            //setData(Res[0].email);
+            
+        }catch(err){
+          console.log(err);
+        }
+    }
 
 
 
