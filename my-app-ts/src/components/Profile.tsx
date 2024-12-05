@@ -1,6 +1,9 @@
 import React from 'react';
 import { Box, Typography, Avatar, Button, Grid, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import UserProfileHeader from "./UserProfileHeader";
+import TweetList from './TweetList';
+import { useParams } from "react-router-dom";
 
 // ダミーデータ
 const userData = {
@@ -15,6 +18,7 @@ const userData = {
 };
 
 const Profile: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   // 編集ページに遷移
@@ -24,7 +28,13 @@ const Profile: React.FC = () => {
 
   return (
     <Box sx={{ maxWidth: 600, margin: 'auto', mt: 4 }}>
+
+
+      <UserProfileHeader id = {id}/>
+      <TweetList postuids={id}/>
+
       {/* 背景画像 */}
+      {/*
       <Box sx={{ position: 'relative' }}>
         <Box
           sx={{
@@ -50,8 +60,10 @@ const Profile: React.FC = () => {
           }}
         />
       </Box>
+      */}
 
       {/* ユーザー情報 */}
+      {/*
       <Paper sx={{ p: 3, mt: 10, borderRadius: 2, boxShadow: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {userData.name}
@@ -60,8 +72,9 @@ const Profile: React.FC = () => {
           {userData.username}
         </Typography>
         <Typography sx={{ mt: 2, textAlign: 'center' }}>{userData.bio}</Typography>
-
+*/}
         {/* フォロワーとフォロー */}
+        {/*
         <Grid container spacing={2} sx={{ mt: 3, justifyContent: 'center' }}>
           <Grid item xs={4} sx={{ textAlign: 'center' }}>
             <Typography variant="h6">{userData.followers}</Typography>
@@ -72,8 +85,9 @@ const Profile: React.FC = () => {
             <Typography color="textSecondary">Following</Typography>
           </Grid>
         </Grid>
+*/}
+        {/* 追加情報（場所、ウェブサイト） *
 
-        {/* 追加情報（場所、ウェブサイト） */}
         <Box sx={{ mt: 3 }}>
           <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'center' }}>
             <strong>Location:</strong> {userData.location}
@@ -85,8 +99,11 @@ const Profile: React.FC = () => {
             </a>
           </Typography>
         </Box>
+        </Paper>
+        */}
 
         {/* 編集ボタン */}
+        
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="contained"
@@ -97,7 +114,8 @@ const Profile: React.FC = () => {
             Edit Profile
           </Button>
         </Box>
-      </Paper>
+      
+      
     </Box>
   );
 };
