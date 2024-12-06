@@ -7,9 +7,11 @@ import ReplyTweetCard from "./ReplyTweetCard";
 interface ReplyTweet {
   reply_id: number;
   uid: string;
+  username: string;
   content: string;
   created_at: string;
   likes_count: string;
+  isLiked: boolean;
 }
 
 interface Uid {

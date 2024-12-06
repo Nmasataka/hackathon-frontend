@@ -1,13 +1,15 @@
 import React from 'react';
-import { Drawer, List, ListItemButton, ListItemText, IconButton, Typography, Box,ListItem,Divider,Avatar,Button } from '@mui/material';
+import { Drawer, List, ListItemButton,ListItemIcon, ListItemText, IconButton, Typography, Box,ListItem,Divider,Avatar,Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import { fireAuth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import PostTweet from './PostTweet';
-import { useAuth } from "../contexts/AuthContext";
+import { useMediaQuery } from "@mui/material";
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person'; // Profile用
+import EditIcon from '@mui/icons-material/Edit'; // Edit Profile用
+import GroupIcon from '@mui/icons-material/Group'; // Follow用
 
 interface SidebarProps {
   open: boolean;
@@ -17,10 +19,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   //const [user] = useAuthState(fireAuth);
   
-  
-  const donepost = () => {
-    console.log("post");
-  }
+
 
   
 
@@ -35,112 +34,269 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      {/* ハンバーガーメニューアイコン（サイドバーの開閉に応じて表示） */}
-      <IconButton
-        onClick={toggleSidebar}
+    {/* ハンバーガーメニューアイコン */}
+    <IconButton
+      onClick={toggleSidebar}
+      sx={{
+        position: 'fixed',
+        top: 16,
+        left: 16,
+        zIndex: 9999,
+        backgroundColor: '#d4a373',
+        color: 'white',
+        '&:hover': {
+          backgroundColor: '#b48a60',
+        },
+      }}
+    >
+      {open ? <CloseIcon /> : <MenuIcon />}
+    </IconButton>
+
+    {/* サイドバー */}
+    <Drawer
+      variant="persistent"
+      anchor="left"
+      open={open}
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: 240,
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          backgroundColor: '#fff8e6',
+          borderRight: '2px solid #d4a373',
+        },
+      }}
+    >
+      <Typography
+        variant="h6"
         sx={{
-          position: 'fixed',
-          top: 16,
-          left: 16,
-          zIndex: 9999, // 常に最前面に表示
+          padding: 2,
+          textAlign: 'center',
+          color: '#5c3d2e',
+          fontFamily: "'Noto Serif JP', serif",
+          borderBottom: '2px solid #d4a373',
         }}
       >
-        {open ? <CloseIcon /> : <MenuIcon />}
-      </IconButton>
+        MyApp
+      </Typography>
 
-      {/* サイドバー */}
-      <Drawer
-        variant="persistent"
-        anchor="left"
-        open={open}
+      <List sx={{ padding: 0 }}>
+  <ListItem disablePadding>
+    <ListItemButton
+      component={Link}
+      to="/"
+      sx={{
+        '&:hover': {
+          backgroundColor: '#f7f3eb',
+        },
+        alignItems: 'center', // 垂直方向でアイテムを中央揃え
+      }}
+    >
+      <ListItemIcon
         sx={{
-          width: 240,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: 240,
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+          minWidth: '40px', // アイコンの横幅を統一
+          justifyContent: 'center', // アイコンを中央揃え
+        }}
+      >
+        <HomeIcon sx={{ color: '#5c3d2e' }} />
+      </ListItemIcon>
+      <ListItemText
+        primary="Home"
+        primaryTypographyProps={{
+          color: '#5c3d2e',
+          fontFamily: "'Noto Serif JP', serif",
+        }}
+      />
+    </ListItemButton>
+  </ListItem>
+
+  <ListItem disablePadding>
+    <ListItemButton
+      component={Link}
+      to="/follow"
+      sx={{
+        '&:hover': {
+          backgroundColor: '#f7f3eb',
+        },
+        alignItems: 'center',
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: '40px',
+          justifyContent: 'center',
+        }}
+      >
+        <GroupIcon sx={{ color: '#5c3d2e' }} />
+      </ListItemIcon>
+      <ListItemText
+        primary="フォロー"
+        primaryTypographyProps={{
+          color: '#5c3d2e',
+          fontFamily: "'Noto Serif JP', serif",
+        }}
+      />
+    </ListItemButton>
+  </ListItem>
+
+  <ListItem disablePadding>
+    <ListItemButton
+      component={Link}
+      to={`/profile/${localStorage.getItem('uid')}`}
+      sx={{
+        '&:hover': {
+          backgroundColor: '#f7f3eb',
+        },
+        alignItems: 'center',
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: '40px',
+          justifyContent: 'center',
+        }}
+      >
+        <PersonIcon sx={{ color: '#5c3d2e' }} />
+      </ListItemIcon>
+      <ListItemText
+        primary="Profile"
+        primaryTypographyProps={{
+          color: '#5c3d2e',
+          fontFamily: "'Noto Serif JP', serif",
+        }}
+      />
+    </ListItemButton>
+  </ListItem>
+
+  <ListItem disablePadding>
+    <ListItemButton
+      component={Link}
+      to="/edit-profile"
+      sx={{
+        '&:hover': {
+          backgroundColor: '#f7f3eb',
+        },
+        alignItems: 'center',
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: '40px',
+          justifyContent: 'center',
+        }}
+      >
+        <EditIcon sx={{ color: '#5c3d2e' }} />
+      </ListItemIcon>
+      <ListItemText
+        primary="Edit Profile"
+        primaryTypographyProps={{
+          color: '#5c3d2e',
+          fontFamily: "'Noto Serif JP', serif",
+        }}
+      />
+    </ListItemButton>
+  </ListItem>
+</List>
+
+
+      <Button
+        variant="contained"
+        component={Link}
+        to="/posttweet"
+        sx={{
+          margin: 2,
+          backgroundColor: '#d4a373',
+          color: 'white',
+          fontFamily: "'Noto Serif JP', serif",
+          '&:hover': {
+            backgroundColor: '#b48a60',
           },
         }}
       >
-        <Typography variant="h6" sx={{ padding: 2 }}>
-          MyApp
-        </Typography>
-        <List>
-          <ListItem disablePadding>
-              <ListItemButton component={Link} to="/tweetlist">
-                  <ListItemText primary="Home" />
-              </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/profile/${localStorage.getItem("uid")}`}>
-                  <ListItemText primary="Profile" />
-              </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-              <ListItemButton component={Link} to="/edit-profile">
-                  <ListItemText primary="Edit Profile" />
-              </ListItemButton>
-          </ListItem>
-        </List>
-        <Button fullWidth onClick={donepost}
+        ポストする
+      </Button>
+
+      <Divider sx={{ marginY: 2 }} />
+
+      <Box
+        sx={{
+          padding: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          backgroundColor: '#f7f3eb',
+          borderTop: '2px solid #d4a373',
+        }}
+      >
+        {localStorage.getItem('uid') != null ? (
+          <>
+            <Avatar
+              sx={{
+                width: 64,
+                height: 64,
+                marginBottom: 1,
+                border: '2px solid #d4a373',
+              }}
+            />
+            <Typography
+              variant="h5"
+              color="textSecondary"
+              sx={{ fontFamily: "'Noto Serif JP', serif", color: '#5c3d2e' }}
+            >
+              {localStorage.getItem('username')}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textPrimary"
+              sx={{ fontFamily: "'Noto Serif JP', serif", color: '#5c3d2e' }}
+            >
+              {localStorage.getItem('uid')}
+            </Typography>
+
+            <Button
+              fullWidth
+              onClick={logout}
+              variant="outlined"
+              color="secondary"
+              sx={{
+                marginTop: 2,
+                fontFamily: "'Noto Serif JP', serif",
+                borderColor: '#d4a373',
+                color: '#5c3d2e',
+                '&:hover': {
+                  backgroundColor: '#f7f3eb',
+                  borderColor: '#b48a60',
+                },
+              }}
+            >
+              ログアウト
+            </Button>
+          </>
+        ) : (
+          <Button
+            fullWidth
+            component={Link}
+            to="/login"
             variant="contained"
             color="primary"
+            sx={{
+              backgroundColor: '#d4a373',
+              fontFamily: "'Noto Serif JP', serif",
+              '&:hover': {
+                backgroundColor: '#b48a60',
+              },
+            }}
           >
-            ポストする</Button>
-
-
-
-        <Divider sx={{ marginY: 2 }} />
-
-
-
-        <Box
-          sx={{
-            padding: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: '#f7f7f7',
-          }}
-        >
-          {localStorage.getItem("uid")!=null ? (
-            <>
-              <Avatar sx={{ width: 64, height: 64, marginBottom: 1 }}>
-                {/*{user.displayName?.[0] || email?.[0]?.toUpperCase()}*/}
-              </Avatar>
-              {/*<Typography variant="subtitle1">{"" || "匿名ユーザー"}</Typography>*/}
-              
-              <Typography variant="h5" color="textSecondary">
-                {localStorage.getItem("username")}
-              </Typography>
-              <Typography variant="body2" color="textPrimary">
-                {localStorage.getItem("uid")}
-              </Typography>
-              
-              <Button fullWidth onClick={logout}
-            variant="outlined"
-            color="secondary"
-          >
-            ログアウト</Button>
-            </>
-          ) : (
-            
-              
-            <Button fullWidth component={Link} to="/login"
-            variant="contained"
-            color="primary"
-          >
-            ログイン</Button>
-            
-          )}
-          
-        </Box>
-
-      </Drawer>
-    </Box>
+            ログイン
+          </Button>
+        )}
+      </Box>
+    </Drawer>
+  </Box>
   );
 };
 

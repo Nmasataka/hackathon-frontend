@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from "react";
 import { Card, CardContent, Typography,Button } from "@mui/material";
 import TweetCard from "./TweetCard";
-import { motion } from "framer-motion"; // 追加
 
 
 // ツイートデータの型定義
@@ -17,17 +16,14 @@ interface Tweet {
 }
 
 
-interface TweetListProps {
-    postuids: string | null | undefined; // 取得したいユーザーIDのリスト。未指定なら全て取得。
-}
 
-const TweetList: React.FC<TweetListProps> = ({postuids}) => {
+const FollowTweetList: React.FC = () => {
     const [tweets, setTweets] = useState<Tweet[]>([]);
 
     const fetchTweets = async () => {
         try{
             //const postuidsParam = postuids?.join(",") || "";
-            const response = await fetch(`${process.env.REACT_APP_URL}/tweetlist?uid=${localStorage.getItem("uid")}&postuid=${postuids}`,{
+            const response = await fetch(`${process.env.REACT_APP_URL}/followtweetlist?uid=${localStorage.getItem("uid")}`,{
                 method: "GET",
                 headers: {"Content-Type":"application/json",},});
               if(!response.ok){
@@ -42,7 +38,7 @@ const TweetList: React.FC<TweetListProps> = ({postuids}) => {
     }
     useEffect(() => {
         fetchTweets();
-      }, [postuids]);
+      }, []);
 
 
     
@@ -54,24 +50,12 @@ const TweetList: React.FC<TweetListProps> = ({postuids}) => {
             No tweets available.
             </Typography>
         ) : (
-            tweets.map((tweet, index) => (
-
-                <motion.div
-            key={tweet.tweet_id}
-            initial={{ opacity: 0, x: -100 }} // 横からスライドイン
-            animate={{ opacity: 1, x: 0 }} // スライドして表示
-            transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
-          >
-
+            tweets.map((tweet) => (
                 <TweetCard
                     key={tweet.tweet_id}
                     tweet={tweet}
                     //onRetweet={handleRetweet}
                 />
-
-</motion.div>
-
-
             ))
         )}
 
@@ -79,6 +63,6 @@ const TweetList: React.FC<TweetListProps> = ({postuids}) => {
     );
 };
 
-export default TweetList;
+export default FollowTweetList;
 
   

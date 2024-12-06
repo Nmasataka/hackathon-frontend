@@ -1,10 +1,11 @@
 import React,{useState} from "react";
-import { Card, CardContent, Typography, Box, IconButton, DialogActions, DialogContent, DialogTitle,TextField } from "@mui/material";
+import { Card, CardContent, Typography, Box, IconButton, Avatar, DialogContent, DialogTitle,TextField } from "@mui/material";
 import { Favorite, FavoriteBorder,Reply } from "@mui/icons-material";
 import { useNavigate,Link } from "react-router-dom";
 import PostTweet from "./PostTweet";
 import ReplyDialog from "./ReplyDialog";
 import { formatToJST } from "../utils/dateUtils";
+import wood from "./woodimage.png"
 
 // ツイートデータの型定義
 interface Tweet {
@@ -107,33 +108,60 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
         cursor: "pointer",
         ":hover": { boxShadow: 6 },
         maxWidth: "600px",marginLeft: "auto",marginRight: "auto",
+
+        background: `url(${wood})`, 
+        backgroundSize: "cover", // テクスチャがカード全体にカバーされるように設定
+        backgroundPosition: "center", // 中央に配置
       }}
       onClick={handleCardClick}
     >
+
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+      <Box display="flex" alignItems="center">
+      {/* アイコン部分 */}
+      <Avatar
+        sx={{
+          bgcolor: "#5c3d2e", // 和風っぽい背景色
+          color: "#fff",
+          width: 40,
+          height: 40,
+          marginRight: 1, // 名前との間隔
+          fontFamily: "'Noto Serif JP', serif",
+        }}
+      >
+        {tweet.username[0]}
+      </Avatar>
         <Typography variant="h6" fontWeight="bold">
           <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#1976d2" }} onClick={jumptoprofile}>
             {tweet.username}
           </Link>
         </Typography>
+        </Box>
         <Typography variant="caption" color="textSecondary">
           {formatToJST(tweet.created_at)}
         </Typography>
       </Box>
 
-      <Typography variant="body1" mb={2} style={{ whiteSpace: "pre-line" }}>
+
+      <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left"}}>
         {tweet.content}
       </Typography>
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex" alignItems="center">
-          <IconButton onClick={pushlikebutton}>
+          <IconButton onClick={pushlikebutton} 
+                      sx={{position: "relative",
+                          ":hover": {
+                            backgroundColor: "rgba(255, 0, 0, 0.1)", transition: "background-color 0.3s ease", },
+                      }}>
             {isLiked ? <Favorite color="error" /> : <FavoriteBorder />}
           </IconButton>
           <Typography variant="body2" color="textSecondary" ml={0.5}>
             {likesCount}
           </Typography>
         </Box>
+
+
         <Box display="flex" alignItems="center">
           <IconButton onClick={(e) => {
             e.stopPropagation();
@@ -154,6 +182,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
         setReplyContent={setReplyContent}
         onReplySubmit={handleReplySubmit}
       />
+      
     </Card>
   );
 };

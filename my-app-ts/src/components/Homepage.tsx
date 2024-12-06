@@ -3,10 +3,11 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import Feed from './Feed';
 import Footer from './Footer';
-import { CssBaseline, ThemeProvider, createTheme,Box } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme,Box,useMediaQuery } from '@mui/material';
 import { Routes, Route,BrowserRouter, useNavigate,Router,Outlet } from "react-router-dom"; // 追加
 import { WafuButton } from './WafuButton';
 import Background from './Background';
+import ImageUploader from './ImageUploader';
 
 
 interface HomeProps {
@@ -17,6 +18,7 @@ interface HomeProps {
 
 const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // サイドバーの開閉状態
+  //const isMobile = useMediaQuery("(max-width:600px)");
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen); // サイドバーの開閉状態を切り替え
@@ -33,7 +35,7 @@ const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
-            marginLeft: isSidebarOpen ? '240px' : '0', 
+            marginLeft: !isSidebarOpen ? '0' : '240px',
             transition: 'margin-left 0.3s ease', 
             width: isSidebarOpen ? 'calc(100%-240px)' : '100%',
           }}
@@ -52,6 +54,7 @@ const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
       <WafuButton label="投稿する" />
     </div>
     */}
+      <ImageUploader />
       <Footer />
     </Box>
   );

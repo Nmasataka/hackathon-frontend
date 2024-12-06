@@ -22,6 +22,8 @@ import SetUsernameForm from './SetUserInfo';
 
 import { AuthProvider } from "./contexts/AuthContext";
 import theme from './theme';
+import FollowTweetList from './components/FollowTweetList';
+import FollowPage from './components/FollowPage';
 
 
 
@@ -127,11 +129,13 @@ function App() {
               <CssBaseline />
               <Routes>
                 <Route path="/" element={<Homepage setDarkMode={setDarkMode} darkMode={darkMode}  />}>
-                    <Route index element={<PostTweet/>} />
+                    <Route index element={<TweetList postuids={"all"}/>} />
                     <Route path="profile/:id" element={<Profile />} />
                     <Route path="edit-profile" element={<EditProfile />} />
                     <Route path="tweet/:id" element={<TweetDetail />} />
-                    <Route path="tweetlist" element={<TweetList postuids={"all"}/>} />
+                    <Route path="posttweet" element={<PostTweet/>} />
+                    <Route path="follow" element={<FollowTweetList/>}/>
+                    <Route path="followlist/:id" element={<FollowPage />}/>
                 </Route>
                 <Route path="/login" element={ <InputForm /> } /> 
                 <Route path="/signup" element={<SignupForm />} />

@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,Stack
 } from "@mui/material";
+import wood from "./woodimage.png"
 
 const EditProfile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -81,7 +82,8 @@ const EditProfile: React.FC = () => {
         alignItems: "center",
         minHeight: "100vh",
         padding: "32px",
-        backgroundColor: "#f0f4f8",
+        //backgroundColor: "#f0f4f8",
+        
       }}
     >
       <Card
@@ -90,7 +92,11 @@ const EditProfile: React.FC = () => {
           padding: "32px",
           boxShadow: "0 6px 12px rgba(0,0,0,0.2)",
           borderRadius: "16px",
-          backgroundColor: "#ffffff",
+          background: `url(${wood})`, 
+        backgroundSize: "cover", // テクスチャがカード全体にカバーされるように設定
+        backgroundPosition: "center", // 中央に配置
+
+          //backgroundColor: "#ffffff",
         }}
       >
         <CardContent>
@@ -125,15 +131,15 @@ const EditProfile: React.FC = () => {
               sx={{ marginRight: "8px" }}
             />
             <Button
-              variant="outlined"
+              variant="contained"
               onClick={resetUsername}
               sx={{
                 padding: "4px 8px",
                 fontSize: "0.875rem",
                 minWidth: "auto",
-                color: "#007BFF",
+                color: "#FFFFFF",
                 whiteSpace: "nowrap",
-                "&:hover": { backgroundColor: "#E3F2FD" },
+                "&:hover": { backgroundColor: "#007BFF" },
               }}
             >
               現状に戻す
@@ -159,15 +165,15 @@ const EditProfile: React.FC = () => {
               sx={{ marginRight: "8px" }}
             />
             <Button
-              variant="outlined"
+              variant="contained"
               onClick={resetBio}
               sx={{
                 padding: "4px 8px",
                 fontSize: "0.875rem",
                 minWidth: "auto",
-                color: "#007BFF",
+                color: "#ffffff",
                 whiteSpace: "nowrap",
-                "&:hover": { backgroundColor: "#E3F2FD" },
+                "&:hover": { backgroundColor: "#007BFF" },
               }}
             >
               現状に戻す
@@ -180,7 +186,7 @@ const EditProfile: React.FC = () => {
             fullWidth
             onClick={handleSave}
             sx={{
-              backgroundColor: "#007BFF",
+              backgroundColor: "primary",
               "&:hover": { backgroundColor: "#0056b3" },
               fontWeight: "bold",
               padding: "12px",

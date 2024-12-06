@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, Typography, Button, CircularProgress,Box,Divider,IconButton, Avatar } from "@mui/material";
 import { Favorite, FavoriteBorder,Reply } from "@mui/icons-material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -145,9 +145,17 @@ const handleReplySubmit =async() => {
         {/* ユーザー情報 */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
           <Avatar  alt={tweet.uid} sx={{ width: 48, height: 48, marginRight: 2 }} />
+        
+
+
           <Typography variant="h5" fontWeight="bold">
+          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#1976d2" }} onClick={(e)=>e.stopPropagation()}>
+
             {tweet.username}
+            </Link>
           </Typography>
+
+
         </Box>
   
         {/* ツイート内容 */}
@@ -181,10 +189,7 @@ const handleReplySubmit =async() => {
             <Typography variant="body2">{replyCount}</Typography>
           </Box>
   
-          {/* 返信ボタン */}
-          <Button variant="outlined"  size="small">
-            リプライ
-          </Button>
+        
           <ReplyDialog
         open={isReplying}
         onClose={handleCloseReplyDialog}

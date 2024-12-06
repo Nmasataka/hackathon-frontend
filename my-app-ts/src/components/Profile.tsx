@@ -5,6 +5,7 @@ import UserProfileHeader from "./UserProfileHeader";
 import TweetList from './TweetList';
 import { useParams } from "react-router-dom";
 
+
 // ダミーデータ
 const userData = {
   avatarUrl: 'https://source.unsplash.com/random/100x100',
@@ -17,6 +18,8 @@ const userData = {
   website: 'https://johndoe.dev',
 };
 
+
+
 const Profile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -25,6 +28,9 @@ const Profile: React.FC = () => {
   const handleEditProfile = () => {
     navigate('/edit-profile');
   };
+  const jumptofollowlist = () => {
+      navigate(`/followlist/${id}`)
+  }
 
   return (
     <Box sx={{ maxWidth: 600, margin: 'auto', mt: 4 }}>
@@ -101,21 +107,6 @@ const Profile: React.FC = () => {
         </Box>
         </Paper>
         */}
-
-        {/* 編集ボタン */}
-        
-        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleEditProfile}
-            sx={{ width: '200px', fontWeight: 'bold' }}
-          >
-            Edit Profile
-          </Button>
-        </Box>
-      
-      
     </Box>
   );
 };
