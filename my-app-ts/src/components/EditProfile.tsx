@@ -113,7 +113,7 @@ const EditProfile: React.FC = () => {
               color: "#333",
             }}
           >
-            Edit Profile
+            身分帳改
           </Typography>
           
           <Box display="flex"
@@ -139,14 +139,25 @@ const EditProfile: React.FC = () => {
             }}
           >
             <TextField
-              label="Username"
+              label="名前"
               variant="outlined"
               fullWidth
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               error={Boolean(error.username)} // エラーがあれば赤枠にする
               helperText={error.username} // エラー内容を表示
-              sx={{ marginRight: "8px" }}
+              sx={{ marginRight: "8px",
+                "& .MuiInputBase-input": {
+      fontSize: "1.5rem", // 入力フィールド内の文字サイズ
+      fontWeight: "bold", // 太字
+      color: "#000000", // テキストカラー
+    },"& .MuiInputLabel-root": {
+      fontSize: "1rem", // ラベルの文字サイズ
+      fontWeight: "bold", // 太字
+      color: "green", // ラベルの色
+    },
+               }}
+              
             />
             <Button
               variant="contained"
@@ -157,7 +168,8 @@ const EditProfile: React.FC = () => {
                 minWidth: "auto",
                 color: "#FFFFFF",
                 whiteSpace: "nowrap",
-                "&:hover": { backgroundColor: "#007BFF" },
+                backgroundColor: "#264653",
+                "&:hover": { backgroundColor: "#00A497" },
               }}
             >
               現状に戻す
@@ -173,14 +185,24 @@ const EditProfile: React.FC = () => {
             }}
           >
             <TextField
-              label="Bio"
+              label="自己紹介"
               variant="outlined"
               fullWidth
               multiline
               rows={5}
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              sx={{ marginRight: "8px" }}
+              sx={{ marginRight: "8px", 
+                "& .MuiInputBase-input": {
+      fontSize: "1.5rem", // 入力フィールド内の文字サイズ
+      fontWeight: "bold", // 太字
+      color: "#000000", // テキストカラー
+    },"& .MuiInputLabel-root": {
+      fontSize: "1rem", // ラベルの文字サイズ
+      fontWeight: "bold", // 太字
+      color: "green", // ラベルの色
+    },
+              }}
             />
             <Button
               variant="contained"
@@ -191,7 +213,8 @@ const EditProfile: React.FC = () => {
                 minWidth: "auto",
                 color: "#ffffff",
                 whiteSpace: "nowrap",
-                "&:hover": { backgroundColor: "#007BFF" },
+                backgroundColor: "#264653",
+                "&:hover": { backgroundColor: "#00A497" },
               }}
             >
               現状に戻す
@@ -205,14 +228,14 @@ const EditProfile: React.FC = () => {
             fullWidth
             onClick={handleSave}
             sx={{
-              backgroundColor: "primary",
-              "&:hover": { backgroundColor: "#0056b3" },
+              backgroundColor: "#264653",
+              "&:hover": { backgroundColor: "#00A497" },
               fontWeight: "bold",
               padding: "12px",
               fontSize: "1rem",
             }}
           >
-            Save Changes
+            変更を保存
           </Button>
         </CardContent>
       </Card>

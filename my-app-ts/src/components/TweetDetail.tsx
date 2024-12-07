@@ -7,6 +7,7 @@ import ReplyList from "./ReplyList";
 import { formatToJST } from "../utils/dateUtils";
 import ReplyDialog from "./ReplyDialog";
 import UserAvatar from "./atoms/UserAvatar";
+import wood from "../Images/woodimage.png"
 
 
 // ツイートデータの型定義
@@ -142,38 +143,44 @@ const handleReplySubmit =async() => {
           borderRadius: 4,
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
           backgroundColor: "#fff",
+          background: `url(${wood})`, 
+        backgroundSize: "cover", // テクスチャがカード全体にカバーされるように設定
+        backgroundPosition: "center", // 中央に配置
         }}
       >
         
         {/* ユーザー情報 */}
-        <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+          <Box  display="flex" alignItems="center">
 
         <UserAvatar profileUrl={tweet.profilePicture} username={tweet.username} size={48} />
           {/*<Avatar  alt={tweet.uid} sx={{ width: 48, height: 48, marginRight: 2 }} />*/}
         
 
 
-          <Typography variant="h5" fontWeight="bold">
-          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#1976d2" }} onClick={(e)=>e.stopPropagation()}>
+          <Typography variant="h5" fontWeight="bold" sx={{marginLeft: 1}}>
+          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#000000" }} onClick={(e)=>e.stopPropagation()}>
 
             {tweet.username}
             </Link>
           </Typography>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
+          {formatToJST(tweet.created_at)}
+        </Typography>
 
 
         </Box>
   
         {/* ツイート内容 */}
-        <Typography variant="h5" sx={{ marginBottom: 2, whiteSpace: "pre-wrap" }}>
+        <Typography variant="h5" sx={{ marginBottom: 2, whiteSpace: "pre-wrap" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black', marginLeft: 3, marginTop: 3}}>
           {tweet.content}
         </Typography>
   
         {/* ツイート日時 */}
-        <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
-          {formatToJST(tweet.created_at)}
-        </Typography>
+        
   
-        <Divider sx={{ marginY: 2 }} />
+        <Divider sx={{ marginY: 2,borderWidth: 1.5, borderColor: "#8B5E3C" }} />
   
         {/* アクションボタン */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -182,16 +189,16 @@ const handleReplySubmit =async() => {
             <IconButton onClick={pushlikebutton} sx={{ marginRight: 1 }}>
             {isLiked ? <Favorite color="error" /> : <FavoriteBorder />}
             </IconButton>
-            <Typography variant="body2">{likesCount}</Typography>
+            <Typography variant="body2" sx={{color:"#000000", fontWeight: "bold"}}>{likesCount}</Typography>
   
             {/* 返信ボタン */}
             <IconButton  sx={{ marginLeft: 3, marginRight: 1 }} onClick={(e) => {
             e.stopPropagation();
             setIsReplying(true);
           }}>
-              <ChatBubbleOutlineIcon color="primary" />
+              <ChatBubbleOutlineIcon sx={{color: "#000000"}} />
             </IconButton>
-            <Typography variant="body2">{replyCount}</Typography>
+            <Typography variant="body2" sx={{color:"#000000", fontWeight: "bold"}}>{replyCount}</Typography>
           </Box>
   
         
@@ -206,9 +213,12 @@ const handleReplySubmit =async() => {
 
       />
         </Box>
-        
+       
+
       </Box>
+      
       <ReplyList id={tweet.tweet_id} refreshReplies={refreshReplies}/>
+  
       </Box>
       )}
     </div>

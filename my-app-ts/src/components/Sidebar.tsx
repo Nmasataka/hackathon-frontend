@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { Drawer, List, ListItemButton,ListItemIcon, ListItemText, IconButton, Typography, Box,ListItem,Divider,Avatar,Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,6 +10,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person'; // Profile用
 import EditIcon from '@mui/icons-material/Edit'; // Edit Profile用
 import GroupIcon from '@mui/icons-material/Group'; // Follow用
+import UserAvatar from './atoms/UserAvatar';
 
 interface SidebarProps {
   open: boolean;
@@ -18,7 +19,28 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   //const [user] = useAuthState(fireAuth);
-  
+  const [profile, setProfile] = useState<string>("");
+
+  const fetchUserInfo = async()=>{
+    try{
+        const response = await fetch(`${process.env.REACT_APP_URL}/loginusername?uid=${localStorage.getItem("uid")}`,{
+          method: "GET",
+          headers: {"Content-Type":"application/json",},});
+        if(!response.ok){
+            throw Error(`Failed to create user: ${response.status}`);
+        }
+        const Res = await response.json();
+        setProfile(Res[0].profilePicture);
+        
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
 
 
   
@@ -234,18 +256,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
       >
         {localStorage.getItem('uid') != null ? (
           <>
-            <Avatar
-              sx={{
-                width: 64,
-                height: 64,
-                marginBottom: 1,
-                border: '2px solid #d4a373',
-              }}
-            />
+          <UserAvatar profileUrl={profile} username={localStorage.getItem("username")} size={64} />
+
             <Typography
               variant="h5"
               color="textSecondary"
-              sx={{ fontFamily: "'Noto Serif JP', serif", color: '#5c3d2e' }}
+              sx={{ fontFamily: "'Noto Serif JP', serif", color: '#5c3d2e',marginTop: 2 }}
             >
               {localStorage.getItem('username')}
             </Typography>

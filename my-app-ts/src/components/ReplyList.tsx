@@ -1,11 +1,12 @@
 import React,{useEffect,useState} from "react";
-import { Card, CardContent, Typography,Button } from "@mui/material";
+import { Card, CardContent, Typography,Button, Box } from "@mui/material";
 import ReplyTweetCard from "./ReplyTweetCard";
 
 interface ReplyTweet {
   reply_id: number;
   uid: string;
   username: string;
+  profilePicture: string;
   content: string;
   created_at: string;
   likes_count: string;
@@ -45,7 +46,16 @@ const ReplyList: React.FC<Uid> = ({id, refreshReplies}) => {
     
 
     return (
-        <div style={{ padding: "16px" }}>
+        <Box
+      sx={{
+        padding: "16px",
+        maxWidth: "900px", 
+        margin: "auto", // 中央揃え
+        //backgroundColor: "#f7f7f7", // 背景色を追加して柔らかい印象に
+        borderRadius: "10px", // 角丸にして柔らかさを出す
+        //boxShadow: 3, 少しだけ影をつけて浮き立たせる
+      }}
+    >
         {tweets.length === 0 ? (
             <Typography variant="body1" align="center" style={{ width: "100%" }}>
             No tweets available.
@@ -56,7 +66,7 @@ const ReplyList: React.FC<Uid> = ({id, refreshReplies}) => {
             ))
         )}
 
-        </div>
+        </Box>
     );
 };
 

@@ -130,21 +130,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
 
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
       <Box display="flex" alignItems="center">
-      {/* アイコン部分 */}
 
-{/*}
-      <Avatar
-        sx={{
-          bgcolor: "#5c3d2e", // 和風っぽい背景色
-          color: "#fff",
-          width: 40,
-          height: 40,
-          marginRight: 1, // 名前との間隔
-          fontFamily: "'Noto Serif JP', serif",
-        }}
-      >
-        {tweet.username[0]}
-      </Avatar>*/}
       <UserAvatar profileUrl={tweet.profilePicture} username={tweet.username} size={40} />
         <Typography variant="h6" fontWeight="bold" sx={{marginLeft: 1}}>
           <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#000000" }} onClick={jumptoprofile}>
@@ -159,7 +145,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
       </Box>
 
 
-      <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black'}}>
+      <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black', marginLeft: 25}}>
         {tweet.content}
       </Typography>
 
