@@ -20,6 +20,7 @@ interface Tweet {
   content: string;
   likes_count: number;
   retweet_count: number;
+  image_url:string;
   isLiked: boolean;
 }
 
@@ -176,6 +177,25 @@ const handleReplySubmit =async() => {
         <Typography variant="h5" sx={{ marginBottom: 2, whiteSpace: "pre-wrap" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black', marginLeft: 3, marginTop: 3}}>
           {tweet.content}
         </Typography>
+        {tweet.image_url && (
+  <Box
+    mt={2}
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+  >
+    <img 
+      src={tweet.image_url} 
+      alt="tweet image" 
+      style={{
+        width: "100%", 
+        //maxHeight: "200px", 
+        borderRadius: "8px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      }} 
+    />
+  </Box>
+)}
   
         {/* ツイート日時 */}
         
