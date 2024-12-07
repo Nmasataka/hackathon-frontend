@@ -8,6 +8,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 const SignupForm : React.FC = () => {
     const [mail, setMail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [showPassword, setShowPassword] = useState<boolean>(false); 
     const [error, setError] = useState<string>("");
 
@@ -16,6 +17,12 @@ const SignupForm : React.FC = () => {
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // フォームのデフォルトの送信を防ぐ
         setError(""); // エラーメッセージをリセット
+
+        // 追加: パスワードの一致確認
+        if (password !== confirmPassword) {
+          setError("パスワードが一致しません");
+          return;
+      }
 
         try {
             const userCredential = await createUserWithEmailAndPassword(fireAuth, mail, password);
@@ -30,6 +37,7 @@ const SignupForm : React.FC = () => {
         }
         setMail("");
         setPassword("");
+        setConfirmPassword("");
     };
     //result = await fetch("http://localhost:8000/register",{
 
@@ -112,6 +120,31 @@ const SignupForm : React.FC = () => {
                     }}
                 />
             </Box>
+
+            <Box sx={{ marginBottom: 2 }}> {/* 追加: パスワード再入力用 */}
+                            <TextField
+                                fullWidth
+                                label="パスワード（再入力）"
+                                type={showPassword ? "text" : "password"}
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                variant="outlined"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword((prev) => !prev)}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Box>
+
+                        
             <Button
               fullWidth
               type="submit"

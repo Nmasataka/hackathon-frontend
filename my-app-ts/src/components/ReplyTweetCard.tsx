@@ -5,12 +5,14 @@ import { useNavigate, Link } from "react-router-dom";
 import PostTweet from "./PostTweet";
 import ReplyDialog from "./ReplyDialog";
 import { formatToJST } from "../utils/dateUtils";
-
+import wood2 from "../Images/wood2.jpeg"
+import UserAvatar from "./atoms/UserAvatar";
 // ツイートデータの型定義
 interface ReplyTweet {
   reply_id: number;
   uid: string;
   username: string;
+  profilePicture: string;
   content: string;
   created_at: string;
   likes_count: string;
@@ -96,29 +98,64 @@ const ReplyTweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
     
       <Card 
       sx={{
-        marginBottom: "16px",
-        padding: "16px",
+        marginBottom: "5px",
+        padding: "12px",
         borderRadius: "12px",
         boxShadow: 3,
         cursor: "pointer",
         ":hover": { boxShadow: 6 },
-        maxWidth: "600px",marginLeft: "auto",marginRight: "auto",
+        maxWidth: "500px",height: "auto",marginLeft: "auto",marginRight: "auto",overflow: "hidden", position: "relative",
+
+        backgroundColor: "transparent",
       }}
     >
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-        <Typography variant="h6" fontWeight="bold">
-          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#1976d2" }} onClick={jumptoprofile}>
+
+
+<Box
+    sx={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: `url(${wood2})`, // 木目画像を背景に設定
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      zIndex: -1, // 背景をコンテンツの後ろに配置
+    }}
+  />
+  <Box
+    sx={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "rgba(255, 255, 255, 0.3)", // 白の半透明オーバーレイ
+      zIndex: -1, // オーバーレイが背景の上に来るように配置
+    }}
+  />
+
+<Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+      <Box display="flex" alignItems="center">
+
+      <UserAvatar profileUrl={tweet.profilePicture} username={tweet.username} size={40} />
+        <Typography variant="h6" fontWeight="bold" sx={{marginLeft: 1}}>
+          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#000000" }} onClick={jumptoprofile}>
             {tweet.username}
           </Link>
+
         </Typography>
-        <Typography variant="caption" color="textSecondary">
+        </Box>
+        <Typography variant="caption" color="#000000" sx={{fontSize: "0.8rem"}} >
           {formatToJST(tweet.created_at)}
         </Typography>
       </Box>
 
-      <Typography variant="body1" mb={2} style={{ whiteSpace: "pre-line" }}>
+      <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black', marginLeft: 25}}>
         {tweet.content}
       </Typography>
+
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex" alignItems="center">
@@ -130,6 +167,7 @@ const ReplyTweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
           </Typography>
         </Box>
       </Box>
+      
     </Card>
 
     
@@ -137,32 +175,3 @@ const ReplyTweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
 };
 
 export default ReplyTweetCard;
-
-
-{/*
-    <Card style={{ marginBottom: "16px",cursor:"pointer"}}>
-      <CardContent>
-        <Typography variant="body1" gutterBottom>
-          {tweet.content}
-        </Typography>
-        <Typography variant="caption" color="textSecondary">
-          Posted on: {new Date(tweet.created_at).toLocaleString()}
-        </Typography>
-        <Typography variant="body2" color="secondary">
-          Likes: {likesCount}
-        </Typography>
-        <Typography variant="body2" color="secondary">
-          tweet_id: {tweet.reply_id}
-        </Typography>
-
-
-          <div style={{ marginTop: "8px", display: "flex", alignItems: "center" }}>
-          <IconButton onClick={pushlikebutton} color="secondary">
-            {isLiked ? <Favorite color="error" /> : <FavoriteBorder />}
-          </IconButton>
-          <Typography variant="body2" color="textSecondary">
-            {likesCount}
-          </Typography>
-        </div>
-      </CardContent>
-      */}
