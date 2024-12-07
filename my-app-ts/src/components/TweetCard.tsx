@@ -7,6 +7,7 @@ import ReplyDialog from "./ReplyDialog";
 import { formatToJST } from "../utils/dateUtils";
 import wood from "../Images/woodimage.png"
 import UserAvatar from "./atoms/UserAvatar";
+import { CircularProgress } from "@mui/material";
 
 // ツイートデータの型定義
 interface Tweet {
@@ -18,6 +19,7 @@ interface Tweet {
   created_at: string;
   likes_count: string;
   retweet_count: string;
+  image_url: string;
   isLiked: boolean;
 }
 
@@ -34,6 +36,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
     const [isReplying, setIsReplying] = useState(false);  // リプライ用の状態を追加
     const [replyContent, setReplyContent] = useState(""); // リプライの内容
     const [errorMessage, setErrorMessage] = useState("");
+    const [isImageLoading, setIsImageLoading] = useState(true);
     const navigate = useNavigate();
 
 
@@ -148,6 +151,39 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
       <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black', marginLeft: 25}}>
         {tweet.content}
       </Typography>
+      {tweet.image_url && (
+        <Box
+          mt={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          position="relative"
+          style={{ height: "200px", width: "100%" }} // スピナーと画像の位置を固定
+        >
+          {isImageLoading && (
+            <CircularProgress
+              size={40}
+              sx={{
+                position: "absolute",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          )}
+          <img
+            src={tweet.image_url}
+            alt="tweet image"
+            style={{
+              maxWidth: "100%",
+              maxHeight: "200px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              display: isImageLoading ? "none" : "block", // 読み込み中は非表示
+            }}
+            onLoad={() => setIsImageLoading(false)} // 画像の読み込み完了時
+            onError={() => setIsImageLoading(false)} // エラー時もスピナーを非表示
+          />
+        </Box>
+      )}
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex" alignItems="center">

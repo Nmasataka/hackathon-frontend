@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 import Header from '../Header';
-import Feed from '../Feed';
 import Footer from '../Footer';
 import { CssBaseline, ThemeProvider, createTheme,Box,useMediaQuery } from '@mui/material';
 import { Routes, Route,BrowserRouter, useNavigate,Router,Outlet } from "react-router-dom"; // 追加

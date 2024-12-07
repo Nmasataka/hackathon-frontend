@@ -15,6 +15,7 @@ interface Tweet {
   created_at: string;
   likes_count: string;
   retweet_count: string;
+  image_url: string;
   isLiked: boolean;
 }
 
