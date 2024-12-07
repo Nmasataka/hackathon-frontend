@@ -10,6 +10,7 @@ interface Tweet {
   tweet_id: number;
   uid: string;
   username: string;
+  profilePicture: string;
   content: string;
   created_at: string;
   likes_count: string;

@@ -9,6 +9,8 @@ import {
   CardContent,Stack
 } from "@mui/material";
 import wood from "../Images/woodimage.png"
+import ImageUploader from "./ImageUploader";
+import UserAvatar from "./atoms/UserAvatar";
 
 const EditProfile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -16,6 +18,7 @@ const EditProfile: React.FC = () => {
   const [defaultUsername, setDefaultUsername] = useState<string>(""); // デフォルトのusername
   const [defaultBio, setDefaultBio] = useState<string>("");
   const [error, setError] = useState<{ username: string }>({ username: "" });
+  const [iconUrl, setIconUrl] = useState<string>("");
 
   const navigate = useNavigate();//追加
 
@@ -28,7 +31,7 @@ const EditProfile: React.FC = () => {
 
     try{
         const result = await fetch(`${process.env.REACT_APP_URL}/register-userinfo`,{
-            method: "POST", body: JSON.stringify({uid: localStorage.getItem("uid"),username: username, bio: bio}),
+            method: "POST", body: JSON.stringify({uid: localStorage.getItem("uid"),username: username, bio: bio, profile: iconUrl}),
         })
         if(!result.ok){
             throw Error(`Failed to create user: ${result.status}`);
@@ -58,6 +61,7 @@ const EditProfile: React.FC = () => {
         setDefaultUsername(Res[0].username);
         setBio(Res[0].bio);
         setDefaultBio(Res[0].bio);
+        setIconUrl(Res[0].profilePicture)
         
     }catch(err){
       console.log(err);
@@ -99,6 +103,7 @@ const EditProfile: React.FC = () => {
         }}
       >
         <CardContent>
+        
           <Typography
             variant="h4"
             sx={{
@@ -110,7 +115,21 @@ const EditProfile: React.FC = () => {
           >
             Edit Profile
           </Typography>
-  
+          
+          <Box display="flex"
+          width="100%" 
+  flexDirection="row"
+  alignItems="center" // 垂直方向の中央揃え
+  gap={5} // 子要素間の余白を指定
+  margin={4}
+  sx={{
+    padding: 2, // 全体にパディングを追加
+    //backgroundColor: "#f5f5f5", // 背景色（必要に応じて変更）
+    borderRadius: 2, // 角丸（必要に応じて変更）
+  }}>
+          <UserAvatar profileUrl={iconUrl} username={defaultUsername} size={180} />
+          <ImageUploader uid={localStorage.getItem("uid")} onUploadComplete={setIconUrl} />
+          </Box>
           {/* Username Field */}
           <Box
             sx={{
@@ -178,6 +197,7 @@ const EditProfile: React.FC = () => {
               現状に戻す
             </Button>
           </Box>
+          
   
           {/* Save Button */}
           <Button

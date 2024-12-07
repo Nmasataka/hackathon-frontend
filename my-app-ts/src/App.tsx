@@ -112,20 +112,6 @@ function App() {
   return (
     <AuthProvider>
         <div className="App">
-          {/* 
-          {loginUser ? (
-            <>
-              <h1 style={{ color: "blue" }}>ログイン中</h1>
-              <button onClick={Logoutbutton}>ログアウト</button>
-            </>
-          ) : (
-            <>
-              <h1 style={{ color: "red" }}>ログアウト中</h1>
-              <button onClick={Loginbutton}>ログイン</button>
-            </>
-          )}
-          <h1>{useremail}</h1>
-          */}
           <ThemeProvider theme={theme}>
               <CssBaseline />
               <Routes>

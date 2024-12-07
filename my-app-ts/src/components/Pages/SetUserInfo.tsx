@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { TextField, Button, Typography, Box, Card, CardContent, FormControlLabel, Checkbox } from "@mui/material";
+import ImageUploader from "../ImageUploader";
 
 const SetUserInfoForm: React.FC = () => {
     const [username, setUsername] = useState<string>("");

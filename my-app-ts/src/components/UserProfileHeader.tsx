@@ -9,6 +9,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import { useNavigate, Link } from 'react-router-dom';
 import CircularProgress from "@mui/material/CircularProgress"; // スピナー追加
 import { motion } from "framer-motion"; // アニメーションライブラリ
+import UserAvatar from "./atoms/UserAvatar";
 
 
 interface UserProfileHeaderProps {
@@ -20,6 +21,7 @@ interface UserInfo {
   email: string;
   username: string;
   bio: string;
+  profilePicture: string;
   created_at: string;
   follow_count: number;
   followed_count: number;
@@ -50,6 +52,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
             throw Error(`Failed to create user: ${response.status}`);
         }
         const Res = await response.json();
+        console.log("hogehoge");
         console.log(Res[0])
         setUserinfo(Res[0]);
         setIsFollow(Res[0].isfollow);
@@ -164,7 +167,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
           backgroundSize: "cover",
         }}
       />
-
+{/*
       <Avatar
         sx={{
           width: 100,
@@ -172,7 +175,9 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
           marginBottom: 2,
           border: "3px solid #ffd700", // 金色で高級感を演出
         }}
-      />
+      />*/}
+
+      <UserAvatar profileUrl={userinfo?.profilePicture} username={userinfo?.username} size={100} />
       <Typography
         variant="h4"
         component="h1"
@@ -204,15 +209,25 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
       >
         {userinfo?.bio}
       </Typography>
-      <CalendarTodayIcon color="action" fontSize="small" />
+    
+      
       <Typography
-        variant="body2"
-        color="#ddd"
-      >
-         {formatToJSTmonth(userinfo?.created_at)}
-         {" から利用しています。"}
-
-      </Typography>
+  variant="body2"
+  color="#ddd"
+  sx={{
+    display: "flex", // フレックスボックスを使用
+    alignItems: "center", // アイコンとテキストを垂直方向に中央揃え
+    fontWeight: "bold",
+  }}
+>
+  <CalendarTodayIcon
+    color="action"
+    fontSize="medium"
+    sx={{ color: "#ffffff", marginRight: 0.5 }} // テキストとの間隔を調整
+  />
+  {formatToJSTmonth(userinfo?.created_at)}
+  {"から利用しています。"}
+</Typography>
       {shouldShowFollowButton && (
             <Button
       variant={isfollow ? "contained" : "outlined"}

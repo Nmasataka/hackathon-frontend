@@ -10,6 +10,7 @@ interface Tweet {
   tweet_id: number;
   uid: string;
   username: string;
+  profilePicture: string;
   content: string;
   created_at: string;
   likes_count: string;
@@ -27,6 +28,7 @@ const FollowTweetList: React.FC = () => {
         setIsLoading(true);
         try{
             //const postuidsParam = postuids?.join(",") || "";
+            console.log("ここに入ったよ");
             const response = await fetch(`${process.env.REACT_APP_URL}/followtweetlist?uid=${localStorage.getItem("uid")}`,{
                 method: "GET",
                 headers: {"Content-Type":"application/json",},});
