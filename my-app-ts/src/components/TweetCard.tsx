@@ -6,12 +6,14 @@ import PostTweet from "./PostTweet";
 import ReplyDialog from "./ReplyDialog";
 import { formatToJST } from "../utils/dateUtils";
 import wood from "../Images/woodimage.png"
+import UserAvatar from "./atoms/UserAvatar";
 
 // ツイートデータの型定義
 interface Tweet {
   tweet_id: number;
   uid: string;
   username: string;
+  profilePicture: string;
   content: string;
   created_at: string;
   likes_count: string;
@@ -129,6 +131,8 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
       <Box display="flex" alignItems="center">
       {/* アイコン部分 */}
+
+{/*}
       <Avatar
         sx={{
           bgcolor: "#5c3d2e", // 和風っぽい背景色
@@ -140,8 +144,9 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
         }}
       >
         {tweet.username[0]}
-      </Avatar>
-        <Typography variant="h6" fontWeight="bold">
+      </Avatar>*/}
+      <UserAvatar profileUrl={tweet.profilePicture} username={tweet.username} size={40} />
+        <Typography variant="h6" fontWeight="bold" sx={{marginLeft: 1}}>
           <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#000000" }} onClick={jumptoprofile}>
             {tweet.username}
           </Link>
@@ -192,6 +197,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
         replyContent={replyContent}
         originalUsername={tweet.username}
         originalContent={tweet.content}
+        originalPicure={tweet.profilePicture}
         setReplyContent={setReplyContent}
         onReplySubmit={handleReplySubmit}
         

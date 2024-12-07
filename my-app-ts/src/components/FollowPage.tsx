@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Box, List, ListItem, ListItemText, Typography, CircularProgress, Button, Avatar } from "@mui/material";
 import { useParams, Link } from "react-router-dom";
 import wood from "../Images/woodimage.png"
+import UserAvatar from "./atoms/UserAvatar";
 
 interface User {
   uid: string;
   username: string;
+  profilePicture: string;
 }
 
 interface FollowPageProps {
@@ -17,6 +19,7 @@ interface FollowPageProps {
 const FollowPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); 
   const [userDetails, setUserDetails] = useState<string>("");
+  const [userPicture, setUserpicure] = useState<string>("");
   const [activeTab, setActiveTab] = useState(0); // 0: フォロー中, 1: フォロワー
   const [followingList, setFollowingList] = useState<User[]>([]);
   const [followersList, setFollowersList] = useState<User[]>([]);
@@ -41,12 +44,12 @@ const FollowPage: React.FC = () => {
       const followingData = await followingResponse.json();
       const followersData = await followersResponse.json();
       const Res = await response.json();
-      console.log("ここ");
       console.log(followersData);
       console.log(followingData);
       setFollowingList(followingData);
       setFollowersList(followersData);
       setUserDetails(Res[0].username);
+      setUserpicure(Res[0].profilePicture);
     } catch (error) {
       console.error("Error fetching follow data:", error);
     } finally {
@@ -88,27 +91,17 @@ const FollowPage: React.FC = () => {
             paddingBottom: 2,
           }}
         >
-          <Avatar
-            sx={{
-              width: 64,
-              height: 64,
-              marginRight: 2,
-              backgroundColor: "#264653",
-              fontSize: "2rem"
-              
-            }}
-          >
-            {userDetails[0]}
-          </Avatar>
+          <UserAvatar profileUrl={userPicture} username={userDetails} size={64} />
           <Link
                           to={`/profile/${id}`}
                           style={{
                             textDecoration: "none",
                             fontWeight: "bold",
                             color: "#1976d2",
+                            
                           }}
                         >
-          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#264653",fontSize: "2.5rem" }}>
+          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#264653",fontSize: "2.5rem" ,marginLeft: 1}}>
             {userDetails}
           </Typography>
           </Link>
@@ -161,9 +154,7 @@ const FollowPage: React.FC = () => {
                       },
                     }}
                   >
-                    <Avatar sx={{ marginRight: 2, backgroundColor: "#8B5E3C" }}>
-                      {user.username[0]}
-                    </Avatar>
+                    <UserAvatar profileUrl={user.profilePicture} username={user.username} size={40} />
                     <ListItemText
                       primary={
                         <Link
@@ -174,6 +165,7 @@ const FollowPage: React.FC = () => {
                             fontWeight: "bold",
                             color: "#000000",
                             fontSize: "1.8rem",
+                            marginLeft: 15
                             
                             }}
                           

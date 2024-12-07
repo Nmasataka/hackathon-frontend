@@ -3,19 +3,22 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button ,T
 import wood from "../Images/woodimage.png"
 import ReplyIcon from '@mui/icons-material/Reply';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import UserAvatar from "./atoms/UserAvatar";
+
 interface ReplyDialogProps {
   open: boolean;
   onClose: () => void;
   replyContent: string;
   originalUsername?: string;
   originalContent?: string;
+  originalPicure?:string
   setReplyContent: React.Dispatch<React.SetStateAction<string>>;
   onReplySubmit: () => void;
   
   //originalContent: string ;
 }
 
-const ReplyDialog: React.FC<ReplyDialogProps> = ({ open, onClose, replyContent,originalUsername,originalContent, setReplyContent, onReplySubmit
+const ReplyDialog: React.FC<ReplyDialogProps> = ({ open, onClose, replyContent,originalUsername,originalContent,originalPicure, setReplyContent, onReplySubmit
  }) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -56,8 +59,8 @@ const ReplyDialog: React.FC<ReplyDialogProps> = ({ open, onClose, replyContent,o
 
 
       {/* アイコン部分 */}
-      <Box display="flex" alignItems="center">
-      <Avatar
+      <Box display="flex" alignItems="center" sx={{marginBottom: 2}}>
+      {/*<Avatar
         sx={{
           bgcolor: "#5c3d2e", // 和風っぽい背景色
           color: "#fff",
@@ -68,8 +71,11 @@ const ReplyDialog: React.FC<ReplyDialogProps> = ({ open, onClose, replyContent,o
         }}
       >
         {originalUsername?originalUsername[0]:""}
-      </Avatar>
-        <Typography variant="h6" fontWeight="bold">
+      </Avatar>*/}
+      <UserAvatar profileUrl={originalPicure} username={originalUsername} size={40} />
+
+
+        <Typography variant="h6" fontWeight="bold" sx={{marginLeft: 1, color: "#000000"}}>
           
             {originalUsername}
      

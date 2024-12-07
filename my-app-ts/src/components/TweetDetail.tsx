@@ -6,6 +6,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ReplyList from "./ReplyList";
 import { formatToJST } from "../utils/dateUtils";
 import ReplyDialog from "./ReplyDialog";
+import UserAvatar from "./atoms/UserAvatar";
 
 
 // ツイートデータの型定義
@@ -13,6 +14,7 @@ interface Tweet {
   tweet_id: number;
   uid: string;
   username: string,
+  profilePicture: string;
   created_at: string;
   content: string;
   likes_count: number;
@@ -145,7 +147,9 @@ const handleReplySubmit =async() => {
         
         {/* ユーザー情報 */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-          <Avatar  alt={tweet.uid} sx={{ width: 48, height: 48, marginRight: 2 }} />
+
+        <UserAvatar profileUrl={tweet.profilePicture} username={tweet.username} size={48} />
+          {/*<Avatar  alt={tweet.uid} sx={{ width: 48, height: 48, marginRight: 2 }} />*/}
         
 
 
