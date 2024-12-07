@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import Feed from './Feed';
-import Footer from './Footer';
+import Sidebar from '../Sidebar';
+import Header from '../Header';
+import Feed from '../Feed';
+import Footer from '../Footer';
 import { CssBaseline, ThemeProvider, createTheme,Box,useMediaQuery } from '@mui/material';
 import { Routes, Route,BrowserRouter, useNavigate,Router,Outlet } from "react-router-dom"; // 追加
-import { WafuButton } from './WafuButton';
-import Background from './Background';
-import ImageUploader from './ImageUploader';
+import Background from '../Background';
+import ImageUploader from '../ImageUploader';
 
 
 interface HomeProps {
@@ -46,15 +45,6 @@ const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
           </Background>
         </Box>
       </Box>
-      {/*
-      <div style={{ padding: "20px", backgroundColor: "#F5F2E8" }}>
-      <h1 style={{ fontFamily: "'Sawarabi Mincho', serif", color: "#8E5B30" }}>
-        和風デザイン
-      </h1>
-      <WafuButton label="投稿する" />
-    </div>
-    */}
-      <ImageUploader />
       <Footer />
     </Box>
   );

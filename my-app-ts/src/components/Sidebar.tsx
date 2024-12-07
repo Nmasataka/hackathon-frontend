@@ -249,14 +249,6 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
             >
               {localStorage.getItem('username')}
             </Typography>
-            <Typography
-              variant="body2"
-              color="textPrimary"
-              sx={{ fontFamily: "'Noto Serif JP', serif", color: '#5c3d2e' }}
-            >
-              {localStorage.getItem('uid')}
-            </Typography>
-
             <Button
               fullWidth
               onClick={logout}

@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Switch } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import tatami from './tatamimite.jpg'
+import tatami from '../Images/tatamimite.jpg'
 
 interface HeaderProps {
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;

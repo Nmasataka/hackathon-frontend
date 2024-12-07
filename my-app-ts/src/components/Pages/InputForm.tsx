@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { signOut, signInWithEmailAndPassword } from "firebase/auth";
-import { fireAuth } from "./firebase";
+import { fireAuth } from "../../firebase";
 import { useNavigate } from 'react-router-dom';//追加
 import { onBackgroundMessage } from "firebase/messaging/sw";
 import { TextField, Button, Typography, Box, Card, CardContent, Alert, IconButton, InputAdornment } from "@mui/material";

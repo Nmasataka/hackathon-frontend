@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite"; // 任意のMUIアイコンを使用
-import SakuraImage from "./ougi.jpg"; // 和風背景画像（桜など）
+import SakuraImage from "../Images/ougi.jpg"; 
 
 const IconBox: React.FC = () => {
   return (

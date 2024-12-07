@@ -8,17 +8,17 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { fireAuth } from "./firebase";
 
 
-import SignupForm from './SignupForm';
-import InputForm from './InputForm';
+import SignupForm from './components/Pages/SignupForm';
+import InputForm from './components/Pages/InputForm';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
-import Homepage from './components/Homepage';
+import Homepage from './components/Pages/Homepage';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import PostTweet from './components/PostTweet';
 import TweetDetail from './components/TweetDetail';
 import TweetList from './components/TweetList';
-import SetUsernameForm from './SetUserInfo';
+import SetUsernameForm from './components/Pages/SetUserInfo';
 
 import { AuthProvider } from "./contexts/AuthContext";
 import theme from './theme';
@@ -60,6 +60,7 @@ function App() {
         setData("");
         localStorage.removeItem("uid");
         localStorage.removeItem("username");
+        navigate('/login')
       }
     });
     return () => unsubscribe(); // アンマウント時に監視解除
