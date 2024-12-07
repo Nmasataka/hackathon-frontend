@@ -1,9 +1,7 @@
 import React,{useEffect,useState} from "react";
 import { Card, CardContent, Typography,Button } from "@mui/material";
-import TweetCard from "./TweetCard";
 import ReplyTweetCard from "./ReplyTweetCard";
 
-// ツイートデータの型定義
 interface ReplyTweet {
   reply_id: number;
   uid: string;
@@ -54,11 +52,7 @@ const ReplyList: React.FC<Uid> = ({id, refreshReplies}) => {
             </Typography>
         ) : (
             tweets.map((tweet) => (
-                <ReplyTweetCard
-                    key={tweet.reply_id}
-                    tweet={tweet}
-                    //onRetweet={handleRetweet}
-                />
+                <ReplyTweetCard key={tweet.reply_id} tweet={tweet}/>
             ))
         )}
 

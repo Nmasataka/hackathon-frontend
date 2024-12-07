@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import AsanohaImage from "./asa01b.png"; // ローカル画像をインポート
+import AsanohaImage from "../Images/asa01b.png"; 
 
 const Background: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -8,11 +8,6 @@ const Background: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       sx={{
         width: "100%",
         minHeight: "100%",
-        //postition: "relative",
-        //display: "flex",
-        //flexDirection: "column",
-        //alignItems: "center",
-        //justifyContent: "center",
         padding: "16px",
         "&::before": {
           content: '""',
@@ -21,7 +16,7 @@ const Background: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundColor: "#F5F2E8", // 生成り色
+          backgroundColor: "#F5F2E8", 
           backgroundImage: `url(${AsanohaImage})`,
           backgroundRepeat: "repeat",
           backgroundSize: "auto",

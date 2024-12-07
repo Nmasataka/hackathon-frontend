@@ -7,6 +7,8 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { useNavigate, Link } from 'react-router-dom';
+import CircularProgress from "@mui/material/CircularProgress"; // スピナー追加
+import { motion } from "framer-motion"; // アニメーションライブラリ
 
 
 interface UserProfileHeaderProps {
@@ -33,9 +35,11 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
   const [isfollow, setIsFollow] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const loggedInUid = localStorage.getItem("uid");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const fetchUserInfo = async()=>{
+    setIsLoading(true);
     console.log("発火");
     console.log(localStorage.getItem("uid"))
     try{
@@ -52,6 +56,8 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
         console.log(Res[0].isfollow);
     }catch(err){
       console.log(err);
+    }finally {
+      setIsLoading(false); // ローディング終了
     }
   }
 
@@ -113,6 +119,24 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
 
 
   return (
+    <div>
+{isLoading ?( // ローディング中の表示
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh"}}>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1, rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              duration: 1,
+              ease: "linear",
+            }}
+          >
+            <CircularProgress size={80}
+              style={{ color: "#d4a373" }} // カスタムカラー（和風）
+            />
+          </motion.div>
+        </div>
+      ):(
     <Box
       sx={{
         width: "100%",
@@ -127,7 +151,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
         position: "relative",
       }}
     >
-      {/* 背景に和風の模様や刀のシルエットを入れる */}
+      
       <Box
         sx={{
           position: "absolute",
@@ -257,8 +281,9 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
         </DialogActions>
       </Dialog>
 
-
     </Box>
+  )}
+   </div>
   );
 };
 

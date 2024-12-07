@@ -8,7 +8,7 @@ import {
   Card,
   CardContent,Stack
 } from "@mui/material";
-import wood from "./woodimage.png"
+import wood from "../Images/woodimage.png"
 
 const EditProfile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -54,7 +54,6 @@ const EditProfile: React.FC = () => {
             throw Error(`Failed to create user: ${response.status}`);
         }
         const Res = await response.json();
-        //console.log(Res[0].username)
         setUsername(Res[0].username);
         setDefaultUsername(Res[0].username);
         setBio(Res[0].bio);

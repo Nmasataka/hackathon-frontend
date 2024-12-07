@@ -5,7 +5,7 @@ import { useNavigate,Link } from "react-router-dom";
 import PostTweet from "./PostTweet";
 import ReplyDialog from "./ReplyDialog";
 import { formatToJST } from "../utils/dateUtils";
-import wood from "./woodimage.png"
+import wood from "../Images/woodimage.png"
 
 // ツイートデータの型定義
 interface Tweet {
@@ -31,6 +31,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
 
     const [isReplying, setIsReplying] = useState(false);  // リプライ用の状態を追加
     const [replyContent, setReplyContent] = useState(""); // リプライの内容
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
 
@@ -67,6 +68,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
     const handleCloseReplyDialog = () => {
       setIsReplying(false);
       setReplyContent(""); // 閉じたときにリプライ内容をクリア
+      setErrorMessage("")
     };
 
     const jumptoprofile = (e: React.FormEvent) => {
@@ -93,6 +95,14 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
             console.log(err);
         }
       };
+
+
+      const handleReplyDialog = async () => {
+        if (!replyContent.trim()) {
+          setErrorMessage("リプライ内容を入力してください。");
+          return;
+        }
+      }
   
 
 
@@ -132,18 +142,19 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
         {tweet.username[0]}
       </Avatar>
         <Typography variant="h6" fontWeight="bold">
-          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#1976d2" }} onClick={jumptoprofile}>
+          <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#000000" }} onClick={jumptoprofile}>
             {tweet.username}
           </Link>
+
         </Typography>
         </Box>
-        <Typography variant="caption" color="textSecondary">
+        <Typography variant="caption" color="#000000" sx={{fontSize: "0.8rem"}} >
           {formatToJST(tweet.created_at)}
         </Typography>
       </Box>
 
 
-      <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left"}}>
+      <Typography variant="h6" mb={2} style={{ whiteSpace: "pre-line" ,textAlign: "left",fontFamily: "'Noto Serif JP', serif",fontWeight: 'bold', color: 'black'}}>
         {tweet.content}
       </Typography>
 
@@ -179,85 +190,18 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
         open={isReplying}
         onClose={handleCloseReplyDialog}
         replyContent={replyContent}
+        originalUsername={tweet.username}
+        originalContent={tweet.content}
         setReplyContent={setReplyContent}
         onReplySubmit={handleReplySubmit}
+        
       />
       
     </Card>
   );
 };
 
-    {/*
-    <Card style={{ marginBottom: "16px",cursor:"pointer"}} onClick={handleCardClick}>
-      <CardContent>
-      <Typography variant="body1" gutterBottom>
-      <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "blue" }} onClick={jumptoprofile}>
-          {tweet.username}</Link>
-        </Typography>
-      <Typography variant="body1" gutterBottom>
-          {tweet.uid}
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          {tweet.content}
-        </Typography>
-        <Typography variant="caption" color="textSecondary">
-          Posted on: {formatToJST(tweet.created_at)}
-        </Typography>
-        <Typography variant="body2" color="secondary">
-          tweet_id: {tweet.tweet_id}
-        </Typography>
-
-
-          <div style={{ marginTop: "8px", display: "flex", alignItems: "center" }}>
-          
-          <IconButton onClick={pushlikebutton} color="secondary">
-            {isLiked ? <Favorite color="error" /> : <FavoriteBorder />}
-          </IconButton>
-          <Typography variant="body2" color="textSecondary">
-            {likesCount}
-          </Typography>
-
-
-          <IconButton onClick={handleRetweet} color="secondary">
-          <Reply />
-            </IconButton>
-            <Typography variant="body2" color="textSecondary">
-            {replyCount}
-          </Typography>
-
-        </div>
-      </CardContent>
-*/}
-
-
-
-      {/* 背景をぼかすオーバーレイ 
-      {isReplying && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            zIndex: 1,
-          }}
-        />
-      )}
-*/}
-      {/* リプライダイアログの表示 
-      <ReplyDialog
-        open={isReplying}
-        onClose={handleCloseReplyDialog}
-        replyContent={replyContent}
-        setReplyContent={setReplyContent}
-        onReplySubmit={handleReplySubmit}
-      />
-
-
-    </Card>
-    */}
+   
 
 
 export default TweetCard;

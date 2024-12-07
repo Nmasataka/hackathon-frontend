@@ -142,6 +142,7 @@ const handleReplySubmit =async() => {
           backgroundColor: "#fff",
         }}
       >
+        
         {/* ユーザー情報 */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
           <Avatar  alt={tweet.uid} sx={{ width: 48, height: 48, marginRight: 2 }} />
@@ -194,8 +195,11 @@ const handleReplySubmit =async() => {
         open={isReplying}
         onClose={handleCloseReplyDialog}
         replyContent={replyContent}
+        originalUsername={tweet.username}
+        originalContent={tweet.content}
         setReplyContent={setReplyContent}
         onReplySubmit={handleReplySubmit}
+
       />
         </Box>
         

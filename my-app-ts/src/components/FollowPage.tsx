@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Box, List, ListItem, ListItemText, Typography, CircularProgress, Button, Avatar } from "@mui/material";
 import { useParams, Link } from "react-router-dom";
+import wood from "../Images/woodimage.png"
 
 interface User {
   uid: string;
@@ -10,6 +11,8 @@ interface User {
 interface FollowPageProps {
   id: string; // 対象ユーザーのUID
 }
+
+
 
 const FollowPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); 
@@ -64,14 +67,16 @@ const FollowPage: React.FC = () => {
 
   const renderEmptyMessage = () => (
     <Box textAlign="center" mt={4}>
-      <Typography variant="body1" color="textSecondary">
+      <Typography variant="body1" color="textSecondary" sx={{fontSize: "1.5rem"}}>
         {activeTab === 0 ? "フォロー中のユーザーはいません。" : "フォロワーはいません。"}
       </Typography>
     </Box>
   );
 
   return (
-    <Box sx={{ width: "100%", maxWidth: 600, margin: "auto", padding: 2 }}>
+    <Box sx={{ width: "100%", maxWidth: 600, margin: "auto", padding: 2 ,background: `url(${wood})`, 
+    backgroundSize: "cover", // テクスチャがカード全体にカバーされるように設定
+    backgroundPosition: "center", borderRadius: "20", minHeight:"60vh"}}>
       {/* ユーザー情報の表示 */}
       {userDetails && (
         <Box
@@ -88,7 +93,9 @@ const FollowPage: React.FC = () => {
               width: 64,
               height: 64,
               marginRight: 2,
-              backgroundColor: "#1976d2",
+              backgroundColor: "#264653",
+              fontSize: "2rem"
+              
             }}
           >
             {userDetails[0]}
@@ -101,7 +108,7 @@ const FollowPage: React.FC = () => {
                             color: "#1976d2",
                           }}
                         >
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#264653",fontSize: "2.5rem" }}>
             {userDetails}
           </Typography>
           </Link>
@@ -120,10 +127,10 @@ const FollowPage: React.FC = () => {
             fontSize: "1.1rem",
           },
           "& .Mui-selected": {
-            color: "#1976d2",
+            color: "#00A497",
           },
           "& .MuiTabs-indicator": {
-      backgroundColor: "#1976d2", // インジケータの色を変更
+      backgroundColor: "#000000", // インジケータの色を変更
     },
         }}
       >
@@ -148,21 +155,26 @@ const FollowPage: React.FC = () => {
                       borderBottom: "1px solid #ddd",
                       "&:hover": {
                         //backgroundColor: "#f9f9f9",
-                        color:  "#000000"
+                        color:  "#000000",
+                        fontSize: "2.5rem",
+
                       },
                     }}
                   >
-                    <Avatar sx={{ marginRight: 2, backgroundColor: "#1976d2" }}>
+                    <Avatar sx={{ marginRight: 2, backgroundColor: "#8B5E3C" }}>
                       {user.username[0]}
                     </Avatar>
                     <ListItemText
                       primary={
                         <Link
                           to={`/profile/${user.uid}`}
+                          
                           style={{
                             textDecoration: "none",
                             fontWeight: "bold",
-                            color: "#1976d2",
+                            color: "#000000",
+                            fontSize: "1.8rem",
+                            
                             }}
                           
 

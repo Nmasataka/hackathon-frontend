@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { fireAuth } from "./firebase";
+import { fireAuth } from "../../firebase";
 import { useNavigate } from 'react-router-dom';//追加
 import { TextField, Button, Typography, Box, Card, CardContent, Alert, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
