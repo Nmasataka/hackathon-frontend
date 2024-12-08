@@ -74,6 +74,7 @@ const EditProfile: React.FC = () => {
 
   const resetUsername = () => setUsername(defaultUsername);
   const resetBio = () => setBio(defaultBio);
+  const reseter = ()=> setIconUrl("");
 
 
 
@@ -128,7 +129,25 @@ const EditProfile: React.FC = () => {
     borderRadius: 2, // 角丸（必要に応じて変更）
   }}>
           <UserAvatar profileUrl={iconUrl} username={defaultUsername} size={180} />
+          <Box>
           <ImageUploader uid={localStorage.getItem("uid")} onUploadComplete={setIconUrl} />
+          <Button
+              variant="contained"
+              onClick={reseter}
+              sx={{
+                marginTop: 5,
+                padding: "4px 8px",
+                fontSize: "0.875rem",
+                minWidth: "auto",
+                color: "#FFFFFF",
+                whiteSpace: "nowrap",
+                backgroundColor: "#264653",
+                "&:hover": { backgroundColor: "#00A497" },
+              }}
+            >
+              アイコン画像を削除
+            </Button>
+            </Box>
           </Box>
           {/* Username Field */}
           <Box

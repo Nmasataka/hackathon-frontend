@@ -17,6 +17,11 @@ interface HomeProps {
 const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // サイドバーの開閉状態
   //const isMobile = useMediaQuery("(max-width:600px)");
+  const [menuTitle, setMenuTitle] = useState("Home");
+
+  const handleMenuChange = (title: string) => {
+    setMenuTitle(title); // メニュー名が変更されたときに状態を更新
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen); // サイドバーの開閉状態を切り替え
@@ -25,9 +30,9 @@ const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <Sidebar open={isSidebarOpen} toggleSidebar={toggleSidebar} /> 
+      <Sidebar open={isSidebarOpen} toggleSidebar={toggleSidebar} onMenuChange={handleMenuChange} /> 
       
-      <Box sx={{ display: 'flex',flex: 1 }}>
+      <Box sx={{ display: 'flex',flex: 1 ,pt: '64px'}}>
         <Box
           sx={{
             flex: 1,
@@ -38,7 +43,7 @@ const Homepage: React.FC<HomeProps> = ({ setDarkMode, darkMode}) => {
             width: isSidebarOpen ? 'calc(100%-240px)' : '100%',
           }}
         >
-         <Header setDarkMode={setDarkMode} darkMode={darkMode} /> 
+         <Header setDarkMode={setDarkMode} darkMode={darkMode} title={menuTitle}/> 
           <Background>
           <Outlet />
           </Background>

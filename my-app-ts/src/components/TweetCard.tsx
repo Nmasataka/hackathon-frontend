@@ -134,7 +134,7 @@ const TweetCard: React.FC<TweetCardProps> = ({ tweet}) => {
       <Box display="flex" alignItems="center">
 
       <UserAvatar profileUrl={tweet.profilePicture} username={tweet.username} size={40} />
-        <Typography variant="h6" fontWeight="bold" sx={{marginLeft: 1}}>
+        <Typography variant="h6" fontWeight="bold" sx={{marginLeft: 1,fontFamily: "'Noto Serif JP', serif"}}>
           <Link to={`/profile/${tweet.uid}`} style={{ textDecoration: "none", color: "#000000" }} onClick={jumptoprofile}>
             {tweet.username}
           </Link>

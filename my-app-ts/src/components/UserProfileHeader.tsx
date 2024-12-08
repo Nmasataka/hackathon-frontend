@@ -186,7 +186,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
           color: "#fff",
           fontFamily: "serif", // 和風フォントを指定
           letterSpacing: 2,
-          marginBottom: 1,
+          marginBottom: 1,marginTop: 3
         }}
       >
         {userinfo?.username}
@@ -217,7 +217,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({id}) => {
   sx={{
     display: "flex", // フレックスボックスを使用
     alignItems: "center", // アイコンとテキストを垂直方向に中央揃え
-    fontWeight: "bold",
+    fontWeight: "bold",marginBottom: 4
   }}
 >
   <CalendarTodayIcon
