@@ -50,6 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
 
   const logout = () => {
     signOut(fireAuth).then(() => {
+      localStorage.removeItem("uid");
       alert("ログアウトしました");
     }).catch(err => {
       alert(err);
