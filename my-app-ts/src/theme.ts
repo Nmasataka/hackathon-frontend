@@ -38,7 +38,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "'Sawarabi Mincho', serif", // 和風フォント
+    fontFamily: "'Noto Serif JP', serif", // 和風フォント
     h1: {
       fontSize: "2rem",
       fontWeight: 700,

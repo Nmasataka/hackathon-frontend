@@ -32,19 +32,64 @@ function App() {
   const [useremail,setEmail] = useState<string | null>(null);
   const [data, setData] = useState("");
   
+  
   // ダークモードの状態管理
   const [darkMode, setDarkMode] = useState(false);
 
   const navigate = useNavigate();//追加
 
   // テーマの作成
-  /*
+  
+  
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
+      primary: {
+        main: "#D9A56E", // 金茶色
+        contrastText: "#FFFFFF", // 白
+      },
+    },
+    typography: {
+      fontFamily: "'Noto Serif JP', serif", // 和風フォント
+      h1: {
+        fontSize: "2rem",
+        fontWeight: 700,
+      },
+      h2: {
+        fontSize: "1.5rem",
+        fontWeight: 700,
+      },
+      body1: {
+        fontSize: "1rem",
+      },
     },
   });
-  */
+
+
+
+/*
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+      primary: {
+        main: "#D9A56E", // 金茶色
+        contrastText: "#FFFFFF", // 白
+      },
+      secondary: {
+        main: "#8E5B30", // 濃い茶色
+      },
+      background: {
+        default: "#F5F2E8", // 和風生成り色
+        paper: "#FFFFFF", // 紙っぽい白
+      },
+      text: {
+        primary: "#8E5B30", // 和風茶色
+        secondary: "#5C3B1E", // 濃い茶色
+      },
+    },
+    
+  });*/
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(fireAuth, user => {
@@ -114,7 +159,7 @@ function App() {
           <ThemeProvider theme={theme}>
               <CssBaseline />
               <Routes>
-                <Route path="/" element={<Homepage setDarkMode={setDarkMode} darkMode={darkMode}  />}>
+                <Route path="/" element={<Homepage setDarkMode={setDarkMode} darkMode={darkMode} />}>
                     <Route index element={<TweetList postuids={"all"}/>} />
                     <Route path="profile/:id" element={<Profile />} />
                     <Route path="edit-profile" element={<EditProfile />} />

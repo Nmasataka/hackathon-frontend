@@ -12,16 +12,20 @@ import EditIcon from '@mui/icons-material/Edit'; // Edit Profile用
 import GroupIcon from '@mui/icons-material/Group'; // Follow用
 import UserAvatar from './atoms/UserAvatar';
 import SearchIcon from "@mui/icons-material/Search";
+import logo from "../Images/a.jpg";
+import { useTheme } from '@mui/material/styles';
 
 interface SidebarProps {
   open: boolean;
   toggleSidebar: () => void;
+  onMenuChange: (title: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar,onMenuChange }) => {
   //const [user] = useAuthState(fireAuth);
   const [profile, setProfile] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  const theme = useTheme();
 
   const fetchUserInfo = async()=>{
     try{
@@ -59,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' ,backgroundColor: theme.palette.background.default, }}>
     {/* ハンバーガーメニューアイコン */}
     <IconButton
       onClick={toggleSidebar}
@@ -107,13 +111,33 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
           borderBottom: '2px solid #d4a373',
         }}
       >
-        MyApp
+        <Box
+      sx={{
+        width: '100%',
+        height: '64px', // 適宜高さを調整
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        //backgroundColor: '#f5f5f5', // 背景色（お好みで変更）
+        //borderBottom: '1px solid #e0e0e0', // 境界線
+      }}
+    >
+      <Avatar
+        src={logo} // ロゴ画像のパス
+        alt="Logo"
+        sx={{
+          width: 60, // アイコンの幅
+          height: 60, // アイコンの高さ
+        }}
+      />
+    </Box>
       </Typography>
 
       <List sx={{ padding: 0 }}>
   <ListItem disablePadding>
     <ListItemButton
       component={Link}
+      onClick={() => onMenuChange("Home")}
       to="/"
       sx={{
         '&:hover': {
@@ -143,6 +167,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   <ListItem disablePadding>
     <ListItemButton
       component={Link}
+      onClick={() => onMenuChange("follow")}
       to="/follow"
       sx={{
         '&:hover': {
@@ -171,6 +196,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   <ListItem disablePadding>
     <ListItemButton
       component={Link}
+      onClick={() => onMenuChange("search")}
       to="/search"
       sx={{
         '&:hover': {
@@ -200,6 +226,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   <ListItem disablePadding>
     <ListItemButton
       component={Link}
+      onClick={() => onMenuChange("profile")}
       to={`/profile/${localStorage.getItem('uid')}`}
       sx={{
         '&:hover': {
@@ -229,6 +256,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   <ListItem disablePadding>
     <ListItemButton
       component={Link}
+      onClick={() => onMenuChange("edit profile")}
       to="/edit-profile"
       sx={{
         '&:hover': {
