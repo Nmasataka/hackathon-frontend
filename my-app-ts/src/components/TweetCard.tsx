@@ -1,8 +1,7 @@
 import React,{useState} from "react";
-import { Card, CardContent, Typography, Box, IconButton, Avatar, DialogContent, DialogTitle,TextField } from "@mui/material";
+import { Card, CardContent, Typography, Box, IconButton } from "@mui/material";
 import { Favorite, FavoriteBorder,Reply } from "@mui/icons-material";
 import { useNavigate,Link } from "react-router-dom";
-import PostTweet from "./PostTweet";
 import ReplyDialog from "./ReplyDialog";
 import { formatToJST } from "../utils/dateUtils";
 import wood from "../Images/woodimage.png"

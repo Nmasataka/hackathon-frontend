@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import { Card, CardContent, Typography,Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress"; // スピナー追加
 import { motion } from "framer-motion"; // アニメーションライブラリ
 import TweetCard from "./TweetCard";

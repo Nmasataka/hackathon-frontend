@@ -136,6 +136,7 @@ const EditProfile: React.FC = () => {
               display: "flex",
               alignItems: "center",
               marginBottom: "24px",
+              margin: "auto",
             }}
           >
             <TextField

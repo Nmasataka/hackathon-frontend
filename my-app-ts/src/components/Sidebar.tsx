@@ -11,6 +11,7 @@ import PersonIcon from '@mui/icons-material/Person'; // Profile用
 import EditIcon from '@mui/icons-material/Edit'; // Edit Profile用
 import GroupIcon from '@mui/icons-material/Group'; // Follow用
 import UserAvatar from './atoms/UserAvatar';
+import SearchIcon from "@mui/icons-material/Search";
 
 interface SidebarProps {
   open: boolean;
@@ -20,6 +21,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
   //const [user] = useAuthState(fireAuth);
   const [profile, setProfile] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
 
   const fetchUserInfo = async()=>{
     try{
@@ -31,6 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
         }
         const Res = await response.json();
         setProfile(Res[0].profilePicture);
+        setUsername(Res[0].username);
         
     }catch(err){
       console.log(err);
@@ -156,7 +159,35 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
         <GroupIcon sx={{ color: '#5c3d2e' }} />
       </ListItemIcon>
       <ListItemText
-        primary="フォロー"
+        primary="follow"
+        primaryTypographyProps={{
+          color: '#5c3d2e',
+          fontFamily: "'Noto Serif JP', serif",
+        }}
+      />
+    </ListItemButton>
+  </ListItem>
+  <ListItem disablePadding>
+    <ListItemButton
+      component={Link}
+      to="/search"
+      sx={{
+        '&:hover': {
+          backgroundColor: '#f7f3eb',
+        },
+        alignItems: 'center',
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: '40px',
+          justifyContent: 'center',
+        }}
+      >
+        <SearchIcon sx={{ color: '#5c3d2e' }} />
+      </ListItemIcon>
+      <ListItemText
+        primary="search"
         primaryTypographyProps={{
           color: '#5c3d2e',
           fontFamily: "'Noto Serif JP', serif",
@@ -214,7 +245,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
         <EditIcon sx={{ color: '#5c3d2e' }} />
       </ListItemIcon>
       <ListItemText
-        primary="Edit Profile"
+        primary="edit profile"
         primaryTypographyProps={{
           color: '#5c3d2e',
           fontFamily: "'Noto Serif JP', serif",
@@ -256,15 +287,19 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
       >
         {localStorage.getItem('uid') != null ? (
           <>
-          <UserAvatar profileUrl={profile} username={localStorage.getItem("username")} size={64} />
+          <UserAvatar profileUrl={profile} username={username} size={64} />
 
             <Typography
               variant="h5"
               color="textSecondary"
               sx={{ fontFamily: "'Noto Serif JP', serif", color: '#5c3d2e',marginTop: 2 }}
+              onClick={fetchUserInfo}
             >
-              {localStorage.getItem('username')}
+              {username}
             </Typography>
+
+
+
             <Button
               fullWidth
               onClick={logout}

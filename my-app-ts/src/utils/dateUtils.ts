@@ -1,6 +1,6 @@
 // src/utils/dateUtils.ts
 export const formatToJST = (utcString: string | undefined): string => {
-    if(utcString==undefined) return "undefined";
+    if(utcString===undefined) return "undefined";
     const utcDate = new Date(utcString);
     const year = utcDate.getUTCFullYear();
     const month = String(utcDate.getUTCMonth() + 1).padStart(2, "0");
