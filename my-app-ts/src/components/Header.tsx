@@ -20,10 +20,11 @@ const Header: React.FC<HeaderProps> = ({ setDarkMode, darkMode }) => {
         <Typography variant="h4" component="div" sx={{ flexGrow: 1,fontFamily: 'serif',color: "black" }}>
           Twitter風アプリ
         </Typography>
+        {/*
         <IconButton color="inherit" onClick={handleThemeChange}>
           {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
         </IconButton>
-        <Switch checked={darkMode} onChange={handleThemeChange} />
+        <Switch checked={darkMode} onChange={handleThemeChange} />*/}
       </Toolbar>
     </AppBar>
   );

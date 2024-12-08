@@ -382,7 +382,7 @@ const PostTweet: React.FC = () => {
             alt="preview"
             style={{
               maxWidth: "100%",
-              maxHeight: "300px",
+              maxHeight: "200px",
               borderRadius: "8px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}

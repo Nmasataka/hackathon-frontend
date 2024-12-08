@@ -1,5 +1,6 @@
 import React from "react";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar
+} from "@mui/material";
 
 interface AvatarProps {
   profileUrl: string|undefined|null;

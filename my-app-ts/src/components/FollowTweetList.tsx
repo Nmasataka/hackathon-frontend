@@ -72,9 +72,9 @@ const FollowTweetList: React.FC = () => {
         </div>
       ):
         tweets.length === 0 ? (
-            <Typography variant="body1" align="center" style={{ width: "100%" }}>
-            No tweets available.
-            </Typography>
+          <Typography variant="h4" align="center" style={{ width: "100%" }}>
+          ---No tweets available.---
+          </Typography>
         ) : (
             tweets.map((tweet) => (
                 <TweetCard

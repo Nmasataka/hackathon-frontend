@@ -24,6 +24,7 @@ const FollowPage: React.FC = () => {
   const [followingList, setFollowingList] = useState<User[]>([]);
   const [followersList, setFollowersList] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  
 
   // APIからデータを取得
   const fetchFollowData = async () => {

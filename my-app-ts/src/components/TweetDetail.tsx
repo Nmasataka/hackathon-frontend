@@ -228,6 +228,7 @@ const handleReplySubmit =async() => {
         replyContent={replyContent}
         originalUsername={tweet.username}
         originalContent={tweet.content}
+        originalPicure={tweet.profilePicture}
         setReplyContent={setReplyContent}
         onReplySubmit={handleReplySubmit}
 

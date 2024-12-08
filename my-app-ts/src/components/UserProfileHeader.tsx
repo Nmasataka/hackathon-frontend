@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
-import { Box, Typography, Avatar, Divider, Button
+import { Box, Typography, Divider, Button
   ,Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
  } from "@mui/material";
 import { formatToJSTmonth } from "../utils/dateUtilsmonth";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupsIcon from "@mui/icons-material/Groups";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import CircularProgress from "@mui/material/CircularProgress"; // スピナー追加
 import { motion } from "framer-motion"; // アニメーションライブラリ
 import UserAvatar from "./atoms/UserAvatar";

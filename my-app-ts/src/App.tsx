@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Add } from '@mui/icons-material';
 //import PostTweet from './PostTweet';
 import { Routes, Route,BrowserRouter, useNavigate,Router } from "react-router-dom"; // 追加
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -24,6 +22,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import theme from './theme';
 import FollowTweetList from './components/FollowTweetList';
 import FollowPage from './components/FollowPage';
+import SearchTweetList from './components/searchTweetList';
 
 
 
@@ -123,6 +122,7 @@ function App() {
                     <Route path="posttweet" element={<PostTweet/>} />
                     <Route path="follow" element={<FollowTweetList/>}/>
                     <Route path="followlist/:id" element={<FollowPage />}/>
+                    <Route path="search" element={<SearchTweetList/>}/>
                 </Route>
                 <Route path="/login" element={ <InputForm /> } /> 
                 <Route path="/signup" element={<SignupForm />} />
